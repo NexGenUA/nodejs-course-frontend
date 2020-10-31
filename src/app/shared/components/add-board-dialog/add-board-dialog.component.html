@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="createBoard()">
+  <div mat-dialog-content class="dialog">
+    <h2>Create Board</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required autocomplete="off">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button type="submit" mat-button>CREATE</button>
+    <button type="button" mat-button (click)="onNoClick()" cdkFocusInitial>CANCEL</button>
+  </div>
+</form>

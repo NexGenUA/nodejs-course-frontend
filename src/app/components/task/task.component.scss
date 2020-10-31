@@ -1,0 +1,128 @@
+@import "src/app/shared/constants/constatns";
+
+:host {
+  display: block;
+  height: auto;
+  margin: 2px 0;
+}
+
+.task {
+  padding: 0;
+
+  .title {
+    margin: 0;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.15;
+    color: $text-color-darker;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 1.15;
+    color: $text-color-darker;
+    padding: 10px;
+  }
+
+  .control {
+    display: flex;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: white;
+    padding: 5px;
+    opacity: 0;
+    transition: all .3s;
+  }
+
+  &:hover {
+    .control, .assign {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .assigned {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  .assign {
+    display: flex;
+    visibility: hidden;
+    position: absolute;
+    font-weight: 900;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    padding: 5px;
+    opacity: 0;
+    transition: all .3s;
+    cursor: pointer;
+
+    &:hover {
+      color: $main-color;
+    }
+  }
+
+  .assigned {
+    visibility: visible;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 1;
+    transition: all .3s;
+
+    .done {
+      font-size: 14px;
+      font-weight: 900;
+      color: $assigned-color;
+    }
+  }
+}
+
+.title-block {
+  display: flex;
+  position: relative;
+
+  .material-icons {
+    cursor: pointer;
+    font-size: 20px;
+    transition: all .3s;
+
+    &:hover {
+      color: $main-color;
+    }
+  }
+}
+
+
+.add-task {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+
+  .add-task-button {
+    align-self: flex-start;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      color: $text-color-darker;
+    }
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}

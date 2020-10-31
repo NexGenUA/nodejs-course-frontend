@@ -1,0 +1,84 @@
+<mat-card
+  [attr.data-id]="column.id"
+  class="column"
+  cdkDropList
+  [cdkDropListData]="column.tasks"
+  (cdkDropListDropped)="drop($event)"
+  [cdkDropListDisabled]="stopDrag"
+  [class.is-add-task]="isShowAddTaskDialog"
+>
+  <div class="column-header">
+    <mat-card-title class="title" *ngIf="!isEdit" (dblclick)="startEdit()">
+      {{ column.title }}
+    </mat-card-title>
+    <form [formGroup]="columnForm" (ngSubmit)="updateColumn()" *ngIf="isEdit">
+      <input
+        class="input-title"
+        type="text"
+        [value]="column.title"
+        autofocus
+        #columnTitle
+        formControlName="titleColumn">
+      <button type="submit" style="display: none"></button>
+    </form>
+    <div class="control" *ngIf="!isEdit; else editControl">
+      <span class="material-icons edit" (click)="startEdit()">edit</span>
+      <span class="material-icons close" (click)="deleteColumn()">close</span>
+    </div>
+    <ng-template #editControl>
+      <div class="control">
+        <span class="material-icons done" (click)="updateColumn()">done</span>
+        <span class="material-icons close" (click)="stopEdit()">close</span>
+      </div>
+    </ng-template>
+  </div>
+
+  <app-task
+    *ngFor="let task of column.tasks"
+    [task]="task"
+    cdkDrag
+    [cdkDragData]="task"
+    (cdkDragStarted)="dragStart($event)"
+    (isEditTask)="isEditTask($event)"
+  >
+    <div class="placeholder" [ngStyle]="{'min-height.px':height}" *cdkDragPlaceholder></div>
+  </app-task>
+  <div class="add-task-container" #addTask>
+
+    <mat-card class="add-task" *ngIf="isShowAddTaskDialog">
+      <span class="material-icons close" (click)="closeAddTask()">close</span>
+      <form [formGroup]="form" class="form" (ngSubmit)="createTask()">
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="1"
+            formControlName="title"
+            autofocus
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="1"
+            formControlName="description"
+          ></textarea>
+        </mat-form-field>
+        <button
+          class="add-task-button"
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >Add task
+        </button>
+      </form>
+    </mat-card>
+  </div>
+  <mat-card-footer *ngIf="!isShowAddTaskDialog" class="footer" (click)="addTaskShowDialog()">
+    <span class="plus">+</span>
+    <span class="text">Add task</span>
+  </mat-card-footer>
+</mat-card>

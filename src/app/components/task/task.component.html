@@ -1,0 +1,54 @@
+<mat-card class="task" *ngIf="!isShowEditTaskDialog">
+  <div class="title-block">
+    <mat-card-title class="title">{{ task.title }}</mat-card-title>
+    <div class="control">
+      <span class="material-icons done" (click)="editTask()">edit</span>
+      <span class="material-icons close" (click)="deleteTask()">close</span>
+    </div>
+  </div>
+  <ng-container *ngIf="isAuth">
+    <div class="assign" (click)="assignTask(userId)" *ngIf="task.userId !== userId">
+      <span>assign</span>
+    </div>
+    <div class="assign" (click)="assignTask(null)" *ngIf="task.userId === userId">
+      <span>unassign</span>
+    </div>
+    <div class="assigned" *ngIf="task.userId === userId">
+      <span class="material-icons done">done</span>
+    </div>
+  </ng-container>
+  <mat-card-content class="description">{{ task.description }}</mat-card-content>
+</mat-card>
+<div  #editTaskBlock>
+  <mat-card class="add-task" *ngIf="isShowEditTaskDialog">
+  <span class="material-icons close" (click)="closeEditTask()">close</span>
+  <form [formGroup]="form" class="form" (ngSubmit)="updateTask()">
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        formControlName="title"
+        autofocus
+      ></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        formControlName="description"
+      ></textarea>
+    </mat-form-field>
+    <button
+      class="add-task-button"
+      mat-raised-button
+      color="primary"
+      type="submit"
+    >Edit task
+    </button>
+  </form>
+</mat-card>
+</div>

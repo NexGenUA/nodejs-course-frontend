@@ -1,0 +1,35 @@
+<div class="registration">
+  <form [formGroup]="sign" class="form" (ngSubmit)="registration()">
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="name"
+        placeholder="Enter your name"
+        autocomplete="off"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Login</mat-label>
+      <input
+        matInput
+        type="text"
+        placeholder="Enter your login"
+        name="login"
+        formControlName="login"
+        autocomplete="off"/>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your password</mat-label>
+      <input
+        matInput [type]="hide ? 'password' : 'text'"
+        placeholder="Enter your password"
+        name="password"
+        formControlName="password"/>
+      <button mat-icon-button matSuffix (mousedown)="hide = !hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Registration</button>
+  </form>
+</div>

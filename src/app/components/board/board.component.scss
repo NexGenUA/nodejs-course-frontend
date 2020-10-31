@@ -1,0 +1,140 @@
+@import "src/app/shared/constants/constatns";
+
+.main {
+  display: flex;
+  padding: 20px 0 10px 30px;
+}
+
+.title {
+  margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 45px;
+}
+
+.columns {
+  display: flex;
+}
+
+.add-column {
+  display: flex;
+  align-items: center;
+  background-color: $background-card;
+  height: 40px;
+  min-width: 280px;
+  width: 280px;
+  padding: 0 10px;
+  color: $text-color-darker;
+  cursor: pointer;
+  user-select: none;
+  transition: all .2s;
+
+  &:hover {
+    background-color: $main-color;
+    color: $text-color-lighter;
+  }
+
+  .plus {
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 1.15;
+  }
+
+  .text {
+    font-size: 18px;
+    line-height: 1.15;
+    margin-left: 7px;
+  }
+}
+
+.buttons {
+  display: flex;
+  margin: 0 10px;
+
+  .board-button {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1.2;
+    color: $text-color-lighter;
+    padding: 7px 20px;
+    margin: 5px;
+    height: 37px;
+  }
+}
+
+
+.board-control-panel {
+  display: flex;
+  padding-top: 30px;
+  margin-left: 30px;
+
+}
+
+::ng-deep mat-form-field.mat-form-field {
+  font-size: 16px;
+
+  .mat-form-field-flex {
+    padding: 0;
+    background-color: unset;
+  }
+}
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  .not-found-board {
+    margin: 30px;
+    font-size: 18px;
+  }
+}
+
+.add-column-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  .control {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    .material-icons {
+      transition: all .2s;
+
+      &:hover {
+        color: $text-color-darker;
+      }
+    }
+  }
+}
+
+.input-title {
+  &.ng-touched.ng-invalid {
+    border-color: $invalid-color;
+    outline: $invalid-color;
+  }
+}
+
+.add-column-container {
+  display: flex;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.column .drag-item:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

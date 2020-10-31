@@ -1,0 +1,34 @@
+<header class="header">
+  <div class="logo" routerLink="/board">
+    <img src="../../../assets/nodejs-logo.svg" alt="Node.js logo">
+  </div>
+  <h1 class="title">REST Api client</h1>
+  <div class="auth" *ngIf="isAuth">
+    <ng-container *ngIf="!(token$ | async)">
+      <button routerLink="/login" class="button" mat-raised-button color="accent">Log In</button>
+      <button routerLink="/registration" class="button" mat-raised-button color="accent">Sign Up</button>
+    </ng-container>
+    <ng-container *ngIf="(user$ | async)">
+      <button
+        class="user-menu"
+        mat-button
+        [matMenuTriggerFor]="menu">
+        Hello, {{ (user$ | async).name || '' }}!
+      </button>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          (click)="deleteUser()">
+          Delete User</button>
+        <button
+          mat-menu-item
+          (click)="editUser()">
+          Edit User</button>
+        <button
+          mat-menu-item
+          (click)="logout()">
+          logout</button>
+      </mat-menu>
+    </ng-container>
+  </div>
+</header>

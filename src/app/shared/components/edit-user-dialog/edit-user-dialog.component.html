@@ -1,0 +1,21 @@
+<form [formGroup]="form" (ngSubmit)="editUser()">
+  <div mat-dialog-content class="dialog">
+    <h2>Edit User</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required autocomplete="off">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Login</mat-label>
+      <input matInput formControlName="login" type="text" required autocomplete="off">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" required autocomplete="off">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button type="submit" mat-button>EDIT</button>
+    <button type="button" mat-button (click)="onNoClick()" cdkFocusInitial>CANCEL</button>
+  </div>
+</form>

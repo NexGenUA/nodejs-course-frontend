@@ -1,0 +1,45 @@
+@import "src/app/shared/constants/constatns";
+
+.footer {
+  height: $footer-height;
+  background-color: $main-color;
+  display: flex;
+  align-items: center;
+  color: $text-color-lighter;
+  padding: 0 20px;
+
+  .copyright {
+    font-size: 14px;
+  }
+
+  .copyright-symbol {
+    font-size: 22px;
+  }
+
+  .github {
+    display: flex;
+    margin-left: auto;
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+
+
+    .github-mark {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      background-image: url(/assets/github-mark.svg);
+      background-repeat: no-repeat;
+      margin-right: 5px;
+    }
+
+    .github-logo {
+      display: flex;
+      height: 24px;
+      width: 64px;
+      background-image: url(/assets/github-logo.svg);
+      background-repeat: no-repeat;
+    }
+  }
+}

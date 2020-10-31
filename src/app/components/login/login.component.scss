@@ -1,0 +1,11 @@
+.auth {
+  display: flex;
+  min-height: calc(100vh - 150px);
+  justify-content: center;
+}
+
+.form {
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+}

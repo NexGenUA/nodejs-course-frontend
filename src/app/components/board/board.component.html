@@ -1,0 +1,75 @@
+<div class="board-control-panel">
+  <mat-form-field appearance="fill" class="select">
+    <mat-label>Board</mat-label>
+    <mat-select (selectionChange)="selectBoard($event.value)" [value]="selectedBoard">
+      <mat-option *ngFor="let board of (board$ | async)" [value]="board.id">
+        {{board.title}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="buttons">
+    <button
+      class="board-button"
+      onclick="this.blur()"
+      mat-raised-button
+      color="primary"
+      (click)="createBoard()">
+      Add Board</button>
+    <button
+      class="board-button"
+      onclick="this.blur()"
+      mat-raised-button
+      color="warn"
+      (click)="deleteBoard()">
+      Delete Board</button>
+  </div>
+  <h3 class="title">{{ boardTitle$ | async }}</h3>
+</div>
+<div class="not-found" *ngIf="!currentBoard && canShow">
+  <span class="not-found-board">404. Board with "id" = "{{ boardId$ | async }}" wasn't found!</span>
+</div>
+<main class="main"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListData]="columns"
+      [cdkDropListDisabled]="isEditColumn || isTaskAdd">
+  <div
+    class="columns"
+    cdkDropListGroup
+    (click)="disableAddColumn()"
+    *ngIf="currentBoard && canShow">
+    <app-column
+      class="drag-item"
+      cdkDrag
+      [column]="column"
+      *ngFor="let column of columns;"
+      (newTask)="newTask($event)"
+      (taskAdd)="taskAdd($event)"
+      (editColumn)="editColumn($event)"
+      [isTaskAdd]="isTaskAdd"
+      [isEditColumn]="isEditColumn"
+      [board]="currentBoard">
+    </app-column>
+  </div>
+  <mat-card class="add-column" (click)="addColumn()" *ngIf="currentBoard">
+    <ng-container *ngIf="!isAddColumn">
+      <span class="plus">+</span>
+      <span class="text">Add column</span>
+    </ng-container>
+    <div class="add-column-container" *ngIf="isAddColumn" #addColumnContainer>
+      <form [formGroup]="createFormColumn" (ngSubmit)="createColumn()">
+        <input
+          class="input-title"
+          type="text"
+          formControlName="titleColumn"
+          #columnTitle
+          autofocus>
+      </form>
+      <div class="control">
+        <span class="material-icons edit" (click)="createColumn()">done</span>
+        <span class="material-icons close" (click)="cancel($event)">close</span>
+      </div>
+    </div>
+  </mat-card>
+</main>

@@ -1,0 +1,39 @@
+@import "../../shared/constants/constatns";
+
+.header {
+  display: flex;
+  align-items: center;
+  background-color: $main-color;
+  height: $header-height;
+  padding: 0 20px;
+
+  .title {
+    font-style: italic;
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 1.2;
+    color: $text-color-lighter;
+    margin-left: 15px;
+  }
+
+  .auth {
+    margin-left: auto;
+
+    .button {
+      margin-left: 10px;
+    }
+  }
+
+  .logo {
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+.user-menu {
+  font-style: italic;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.2;
+  color: $text-color-lighter;
+}

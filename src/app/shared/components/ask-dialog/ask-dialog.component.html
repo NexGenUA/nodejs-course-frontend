@@ -1,0 +1,7 @@
+<div mat-dialog-content class="dialog">
+  <p class="message">Remove {{ message }}?</p>
+</div>
+<div mat-dialog-actions class="dialog">
+  <button mat-button [mat-dialog-close]="true" >YES</button>
+  <button mat-button (click)="onNoClick()" cdkFocusInitial>NO</button>
+</div>

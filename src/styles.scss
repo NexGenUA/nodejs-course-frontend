@@ -1,0 +1,70 @@
+@import '~@angular/material/theming';
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@include mat-core();
+
+$brand-color: (
+  500: #A8B19D,
+  contrast: (
+    500: $light-primary-text,
+  )
+);
+
+$warn-color: (
+  500: #c35a0e,
+  contrast: (
+    500: $light-primary-text,
+  )
+);
+
+$accent-color: (
+  500: #7ea1a9,
+  contrast: (
+    500: $light-primary-text,
+  )
+);
+
+$nodejs-course-frontend-primary: mat-palette($brand-color);
+$nodejs-course-frontend-accent: mat-palette($accent-color);
+
+$nodejs-course-frontend-warn: mat-palette($warn-color);
+
+$nodejs-course-frontend-theme: mat-light-theme($nodejs-course-frontend-primary, $nodejs-course-frontend-accent, $nodejs-course-frontend-warn);
+
+@include mat-progress-bar-theme($nodejs-course-frontend-theme);
+@include angular-material-theme($nodejs-course-frontend-theme);
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.background {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  background: #cccccc url(/assets/background.jpg) center center;
+  background-size: cover;
+  z-index: -2;
+  opacity: .2;
+}
+
+.background:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background-color: rgba(0, 0, 0, .1);
+}
