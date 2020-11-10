@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { Column } from '../../shared/models/column.model';
 import { select, Store } from '@ngrx/store';
 import { getBoards, getBoardTitle } from '../../store/selectors/board.selector';
@@ -8,7 +8,7 @@ import { GetBoardsAction, ResetBoardAction, UpdateBoardAction } from '../../stor
 import { Router } from '@angular/router';
 import { paths } from '../../shared/constants/constants';
 import { GetColumnByIdAction } from '../../store/actions/column.action';
-import { selectBoardId, selectRouter } from '../../store/selectors/router.selector';
+import { selectBoardId } from '../../store/selectors/router.selector';
 import { getColumns } from '../../store/selectors/column.selector';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Task } from 'src/app/shared/models/task.model';
@@ -18,14 +18,13 @@ import { DOCUMENT } from '@angular/common';
 import { AddBoardDialogComponent } from '../../shared/components/add-board-dialog/add-board-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AskDialogComponent } from '../../shared/components/ask-dialog/ask-dialog.component';
-import { log } from 'util';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent implements OnInit, OnDestroy {
+export class BoardComponent implements OnDestroy {
   @ViewChild('columnTitle') columnTitle: ElementRef;
   @ViewChild('addColumnContainer') addColumnContainer: ElementRef;
 
@@ -102,10 +101,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       }
     });
     this.subscribers.push(subscriber);
-  }
-
-  ngOnInit(): void {
-
   }
 
   ngOnDestroy(): void {

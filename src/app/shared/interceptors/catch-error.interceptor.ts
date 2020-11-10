@@ -23,7 +23,9 @@ export class CatchErrorInterceptor implements HttpInterceptor {
   }
 
   private handleError(err: HttpErrorResponse) {
-    this.snackBar.open(err.statusText, `status: ${err.status}`, {
+    let { error } = err;
+    error = typeof error === 'string' ? error : 'Connection error';
+    this.snackBar.open(error, `status: ${err.status}`, {
       duration: 5000,
     });
     return throwError(err);

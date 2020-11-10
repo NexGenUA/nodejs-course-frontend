@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '../../shared/models/user.model';
@@ -17,7 +17,7 @@ import { EditUserDialogComponent } from '../../shared/components/edit-user-dialo
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnDestroy {
 
   isAuth: boolean = environment.auth;
   user$: Observable<User> = this.store$.pipe(select(getUser));
@@ -30,9 +30,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
   ) {
-  }
-
-  ngOnInit(): void {
   }
 
   deleteUser(): void {

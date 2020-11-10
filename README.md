@@ -1,5 +1,7 @@
 ## Фронтенд часть для [Nodejs RSSchool](https://github.com/rolling-scopes-school/nodejs-course-template) курса 
 
+### Демо: [https://nodejs-trello.netlify.app/](https://nodejs-trello.netlify.app/)
+
 Перед началом использования необходимо донастроить `nodejs app` наличием разрешающих  `headers` в респонсах, реализовать можно несколькоми способами, пример:
 
 <details>
