@@ -214,7 +214,8 @@ export class ColumnComponent implements OnChanges, OnDestroy {
       if (this.column.title === title) {
         this.stopEdit();
       } else {
-        const subscriber = this.httpService.updateBoard(this.board).subscribe(() => {
+        const subscriber = this.httpService.updateBoard(this.board).subscribe((board) => {
+          this.store$.dispatch(new UpdateBoardAction(board));
           this.column.title = title;
           this.stopEdit();
         });
