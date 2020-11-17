@@ -23,7 +23,27 @@
       (click)="deleteBoard()">
       Delete Board</button>
   </div>
-  <h3 class="title">{{ boardTitle$ | async }}</h3>
+  <h3 class="title" *ngIf="!isEdit" (dblclick)="startEditTitle()">{{ boardTitle$ | async }}</h3>
+  <div class="edit-board-title" *ngIf="selectedBoard" #editBoardTitleRef>
+    <form [formGroup]="boardForm" (ngSubmit)="updateBoardTitle()" *ngIf="isEdit">
+      <input
+        class="input-title"
+        type="text"
+        autofocus
+        #boardTitle
+        formControlName="titleBoard">
+      <button type="submit" style="display: none"></button>
+    </form>
+    <div class="control" *ngIf="!isEdit; else editControl">
+      <span class="material-icons edit start-edit-title" (click)="startEditTitle()">edit</span>
+    </div>
+    <ng-template #editControl>
+      <div class="control">
+        <span class="material-icons done" (click)="updateBoardTitle()">done</span>
+        <span class="material-icons close" (click)="stopEdit()">close</span>
+      </div>
+    </ng-template>
+  </div>
 </div>
 <div class="not-found" *ngIf="!currentBoard && canShow">
   <span class="not-found-board">404. Board with "id" = "{{ boardId$ | async }}" wasn't found!</span>
@@ -49,7 +69,8 @@
       (editColumn)="editColumn($event)"
       [isTaskAdd]="isTaskAdd"
       [isEditColumn]="isEditColumn"
-      [board]="currentBoard">
+      [board]="currentBoard"
+      (mousedown)="this.closeEdits()">
     </app-column>
   </div>
   <mat-card class="add-column" (click)="addColumn()" *ngIf="currentBoard">

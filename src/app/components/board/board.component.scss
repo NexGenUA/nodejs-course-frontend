@@ -11,6 +11,8 @@
   text-overflow: ellipsis;
   overflow: hidden;
   line-height: 45px;
+  user-select: none;
+  cursor: text;
 }
 
 .columns {
@@ -137,4 +139,23 @@
 
 .column .drag-item:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.edit-board-title {
+  padding-top: 10px;
+  margin-right: 30px;
+  display: flex;
+
+  span {
+    cursor: pointer;
+    transition: all .2s;
+
+    &:hover {
+      color: $main-color;
+    }
+  }
+
+  .control {
+    margin-left: 10px;
+  }
 }
