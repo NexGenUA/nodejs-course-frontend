@@ -1,7 +1,7 @@
 <div class="auth">
   <form [formGroup]="auth" class="form" (ngSubmit)="login()">
     <mat-form-field appearance="fill">
-      <mat-label>Login</mat-label>
+      <mat-label>Enter your login</mat-label>
       <input
         matInput
         formControlName="login">
@@ -11,7 +11,11 @@
       <input
         matInput [type]="hide ? 'password' : 'text'"
         formControlName="password">
-      <button mat-icon-button matSuffix (mousedown)="hide = !hide">
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>

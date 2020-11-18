@@ -1,4 +1,4 @@
-<mat-card class="task" *ngIf="!isShowEditTaskDialog">
+<mat-card class="task" *ngIf="!isShowEditTaskDialog" (dblclick)="editTask()">
   <div class="title-block">
     <mat-card-title class="title">{{ task.title }}</mat-card-title>
     <div class="control">

@@ -20,13 +20,17 @@
         autocomplete="off"/>
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-label>Enter your password</mat-label>
+      <mat-label>Password</mat-label>
       <input
         matInput [type]="hide ? 'password' : 'text'"
         placeholder="Enter your password"
         name="password"
         formControlName="password"/>
-      <button mat-icon-button matSuffix (mousedown)="hide = !hide">
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>

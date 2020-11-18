@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { Column } from '../../shared/models/column.model';
 import { select, Store } from '@ngrx/store';
 import { getBoards, getBoardTitle } from '../../store/selectors/board.selector';
@@ -8,7 +8,7 @@ import { GetBoardsAction, ResetBoardAction, UpdateBoardAction } from '../../stor
 import { Router } from '@angular/router';
 import { paths } from '../../shared/constants/constants';
 import { GetColumnByIdAction } from '../../store/actions/column.action';
-import { selectBoardId, selectRouter } from '../../store/selectors/router.selector';
+import { selectBoardId } from '../../store/selectors/router.selector';
 import { getColumns } from '../../store/selectors/column.selector';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Task } from 'src/app/shared/models/task.model';
@@ -18,16 +18,17 @@ import { DOCUMENT } from '@angular/common';
 import { AddBoardDialogComponent } from '../../shared/components/add-board-dialog/add-board-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AskDialogComponent } from '../../shared/components/ask-dialog/ask-dialog.component';
-import { log } from 'util';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent implements OnInit, OnDestroy {
+export class BoardComponent implements OnDestroy {
   @ViewChild('columnTitle') columnTitle: ElementRef;
+  @ViewChild('boardTitle') boardTitleRef: ElementRef;
   @ViewChild('addColumnContainer') addColumnContainer: ElementRef;
+  @ViewChild('editBoardTitleRef') editBoardTitleRef: ElementRef;
 
   columns$: Observable<Column[]> = this.store$.pipe(select(getColumns));
   columns: Column[] = [];
@@ -41,11 +42,15 @@ export class BoardComponent implements OnInit, OnDestroy {
   isAddColumn = false;
   createFormColumn: FormGroup;
   canShow = false;
+  isEdit = false;
+  boardForm: FormGroup;
+  boardTitle: string;
 
   private boardsCount = -1;
   private boardIdSubscriber: Subscription = null;
   private subscribers: Subscription[] = [];
-  private listener = () => { };
+  private boardTitleSub: Subscription;
+  private listener = () => {};
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -55,6 +60,13 @@ export class BoardComponent implements OnInit, OnDestroy {
     private httpService: HttpService,
     public dialog: MatDialog,
   ) {
+    this.boardForm = new FormGroup({
+      titleBoard: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1)
+      ]),
+    });
+
     this.store$.dispatch(new GetBoardsAction());
     const columnsSubscriber = this.columns$.subscribe(columns => {
       this.columns = JSON.parse(JSON.stringify(columns));
@@ -102,10 +114,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       }
     });
     this.subscribers.push(subscriber);
-  }
-
-  ngOnInit(): void {
-
   }
 
   ngOnDestroy(): void {
@@ -246,6 +254,61 @@ export class BoardComponent implements OnInit, OnDestroy {
         }
       });
       this.subscribers.push(dialogSub);
+    }
+  }
+
+  updateBoardTitle(): void {
+    const title = this.boardForm.get('titleBoard').value;
+
+    if (this.boardTitle !== title && this.boardForm) {
+      const updatedBoard: Board = JSON.parse(JSON.stringify(this.currentBoard));
+      delete updatedBoard.columns;
+      this.httpService.updateBoard({...updatedBoard, title}).subscribe(board => {
+        this.store$.dispatch(new UpdateBoardAction(board));
+      }, () => {});
+    }
+
+    this.stopEdit();
+  }
+
+  async startEditTitle(): Promise<void> {
+    this.boardTitle = await new Promise(resolve => {
+      this.boardTitleSub = this.boardTitle$.subscribe(data => {
+        resolve(data);
+      });
+    });
+    this.boardForm.setValue({
+      titleBoard: this.boardTitle,
+    });
+
+    this.isEdit = true;
+
+    this.documentEvent();
+
+    setTimeout(() => {
+      this.boardTitleRef?.nativeElement.focus();
+    }, 0);
+    this.subscribers.push(this.boardTitleSub);
+  }
+
+  stopEdit(): void {
+    this.isEdit = false;
+    this.boardTitleSub.unsubscribe();
+    this.listener();
+  }
+
+  documentEvent(): void {
+    this.listener = this.renderer.listen(this.document, 'click', ({target}) => {
+        if (!target.classList.contains('start-edit-title') && !this.editBoardTitleRef?.nativeElement.contains(target)) {
+          this.updateBoardTitle();
+        }
+    });
+
+  }
+
+  closeEdits() {
+    if (this.isEdit) {
+      this.updateBoardTitle();
     }
   }
 }
