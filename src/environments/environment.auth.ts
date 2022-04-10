@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
   auth: true,
-  apiUrl: 'https://winged-octagon-287518.oa.r.appspot.com',
+  apiUrl: 'https://api-auth-nodejs.herokuapp.com',
 };
